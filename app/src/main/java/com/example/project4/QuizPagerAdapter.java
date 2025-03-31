@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.project4.data.Quiz;
 public class QuizPagerAdapter extends FragmentPagerAdapter {
 
     private Quiz quiz;
