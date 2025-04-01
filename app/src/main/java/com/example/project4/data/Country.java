@@ -9,10 +9,16 @@ public class Country {
         this.id = id;
         this.name = name;
         this.continent = continent;
-    }
+    } // Country constructor
 
     // Getters and setters
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public String getContinent() { return continent; }
-}
+    public int getId() {
+        return id;
+    } // getId
+    public String getName() {
+        return name;
+    } // getName
+    public String getContinent() {
+        return continent;
+    } // getContinent
+} // Country

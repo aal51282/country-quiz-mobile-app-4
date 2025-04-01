@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         if (!dbHelper.isDatabasePopulated()) {
             Toast.makeText(this, "Initializing database from CSV file...", Toast.LENGTH_SHORT).show();
             new CSVAsyncTask(this, dbHelper).execute();
-        }
+        } // if
 
         // Set up the continents map image
         ImageView ivContinentsMap = findViewById(R.id.ivContinentsMap);
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, QuizActivity.class);
                 startActivity(intent);
-            }
+            } // onClick
         });
 
         btnViewResults.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
                 startActivity(intent);
-            }
+            } // onClick
         });
-    }
-}
+    } // onCreate
+} // MainActivity

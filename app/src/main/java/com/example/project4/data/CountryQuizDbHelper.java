@@ -33,11 +33,11 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
             instance = new CountryQuizDbHelper(context.getApplicationContext());
         }
         return instance;
-    }
+    } // getInstance
 
     private CountryQuizDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+    } // CountryQuizDbHelper
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -54,7 +54,7 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
                 COL_QUIZ_DATE + " TEXT NOT NULL, " +
                 COL_QUIZ_SCORE + " INTEGER NOT NULL);";
         db.execSQL(createQuizzes);
-    }
+    } // onCreate
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -62,7 +62,7 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COUNTRIES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZZES);
         onCreate(db);
-    }
+    } // onUpgrade
 
     /**
      * Checks whether the countries table has been populated.
@@ -80,5 +80,5 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
             Log.e(TAG, "Error checking database population", e);
         }
         return false;
-    }
-}
+    } // isDatabasePopulated
+} // CountryQuizDbHelper

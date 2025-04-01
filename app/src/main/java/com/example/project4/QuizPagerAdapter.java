@@ -14,17 +14,17 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     public QuizPagerAdapter(FragmentActivity fragmentActivity, Quiz quiz) {
         super(fragmentActivity);
         this.quiz = quiz;
-    }
+    } // QuizPagerAdapter constructor
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         // Create a new instance of QuestionFragment with the question data
         return QuestionFragment.newInstance(quiz.getQuestions().get(position), position);
-    }
+    } // createFragment
 
     @Override
     public int getItemCount() {
         return quiz.getQuestions().size();
-    }
-}
+    } // getItemCount
+} // QuizPagerAdapter

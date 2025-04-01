@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,7 +63,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         } else {
             // Start a fresh quiz by loading countries first
             new LoadCountriesTask(false, 0).execute();
-        }
+        } // if
 
         // Disable swiping right (to previous questions)
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -83,17 +82,17 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                     // If trying to swipe to a previous question, revert back
                     if (viewPager.getCurrentItem() < currentPosition) {
                         viewPager.setCurrentItem(currentPosition, true);
-                    }
-                }
-            }
+                    } // if
+                } // if
+            } // onPageScrollStateChanged
 
             @Override
             public void onPageSelected(int position) {
                 // Update progress text when page changes
                 tvProgress.setText(getString(R.string.progress_text, position + 1, NUM_QUESTIONS));
-            }
+            } // onPageSelected
         });
-    }
+    } // onCreate
 
     private class LoadCountriesTask extends AsyncTask<Void, Void, List<Country>> {
         private boolean isRestoring;
@@ -102,12 +101,12 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         public LoadCountriesTask(boolean isRestoring, int positionToRestore) {
             this.isRestoring = isRestoring;
             this.positionToRestore = positionToRestore;
-        }
+        } // LoadCountriesTask
 
         @Override
         protected List<Country> doInBackground(Void... voids) {
             return loadCountriesFromDatabase();
-        }
+        } // doInBackground
 
         @Override
         protected void onPostExecute(List<Country> countries) {
@@ -115,7 +114,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
             if (allCountries.size() < NUM_QUESTIONS) {
                 Log.e(TAG, "Not enough countries in database");
                 return;
-            }
+            } // if
 
             if (isRestoring && quiz != null) {
                 // Set up UI with the restored quiz
@@ -123,9 +122,9 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
             } else {
                 // Create a new quiz
                 createNewQuiz();
-            }
-        }
-    }
+            } // if
+        } // onPostExecute
+    } // LoadCountriesTask
 
     private List<Country> loadCountriesFromDatabase() {
         List<Country> countries = new ArrayList<>();
@@ -145,13 +144,13 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                 String continent = cursor.getString(cursor.getColumnIndexOrThrow(CountryQuizDbHelper.COL_COUNTRY_CONTINENT));
 
                 countries.add(new Country(id, name, continent));
-            }
+            } // while
         } catch (Exception e) {
             Log.e(TAG, "Error loading countries from database", e);
-        }
+        } // try
 
         return countries;
-    }
+    } // loadCountriesFromDatabase
 
     private void createNewQuiz() {
         // Randomly select NUM_QUESTIONS countries without duplicates
@@ -159,7 +158,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         Random rand = new Random();
         while (indices.size() < NUM_QUESTIONS) {
             indices.add(rand.nextInt(allCountries.size()));
-        }
+        } // while
 
         List<Question> questions = new ArrayList<>();
         for (Integer index : indices) {
@@ -186,15 +185,15 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                 if (continents.isEmpty()) break;
                 String candidate = continents.remove(rand.nextInt(continents.size()));
                 incorrectAnswers.add(candidate);
-            }
+            } // while
 
             Question question = new Question(country, correctContinent, incorrectAnswers);
             questions.add(question);
-        }
+        } // for
 
         quiz = new Quiz(questions);
         setupQuizUI(0); // Start at the first question
-    }
+    } // createNewQuiz
 
     private void setupQuizUI(int startPosition) {
         // Initialize the ViewPager2 with the question fragments
@@ -204,7 +203,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
 
         // Disable swiping back to previous questions
         viewPager.setUserInputEnabled(true);
-    }
+    } // setupQuizUI
 
     /**
      * This callback is invoked when a user selects an answer in a QuestionFragment
@@ -224,15 +223,15 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         } else {
             // Quiz finished – store the quiz result asynchronously in the DB
             new StoreQuizResultTask().execute();
-        }
-    }
+        } // if
+    } // onAnswerSelected
 
     private class StoreQuizResultTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             storeQuizResult();
             return null;
-        }
+        } // doInBackground
 
         @Override
         protected void onPostExecute(Void aVoid) {
@@ -241,8 +240,8 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
             intent.putExtra("score", quiz.getCurrentScore());
             startActivity(intent);
             finish();
-        }
-    }
+        } // onPostExecute
+    } // StoreQuizResultTask
 
     private void storeQuizResult() {
         // Insert the quiz date and score into the quizzes table
@@ -252,7 +251,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                 CountryQuizDbHelper.COL_QUIZ_SCORE + ") VALUES (?, ?)";
         dbHelper.getWritableDatabase().execSQL(insertSQL,
                 new Object[]{date, quiz.getCurrentScore()});
-    }
+    } // storeQuizResult
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -260,6 +259,6 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         if (quiz != null) {
             outState.putSerializable(KEY_QUIZ_STATE, quiz);
             outState.putInt(KEY_CURRENT_POSITION, viewPager.getCurrentItem());
-        }
-    }
-}
+        } // if
+    } // onSaveInstanceState
+} // QuizActivity

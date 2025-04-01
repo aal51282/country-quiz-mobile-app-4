@@ -1,7 +1,6 @@
 package com.example.project4;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -36,11 +35,11 @@ public class ResultsActivity extends AppCompatActivity {
             tvScore.setText(getString(R.string.quiz_score, score, 6));
         } else {
             tvScore.setText(R.string.past_results);
-        }
+        } // if
 
         // Load past quiz results asynchronously
         new LoadResultsTask().execute();
-    }
+    } // onCreate
 
     private class LoadResultsTask extends AsyncTask<Void, Void, Cursor> {
         @Override
@@ -51,7 +50,7 @@ public class ResultsActivity extends AppCompatActivity {
                     " FROM " + CountryQuizDbHelper.TABLE_QUIZZES +
                     " ORDER BY " + CountryQuizDbHelper.COL_QUIZ_DATE + " DESC";
             return dbHelper.getReadableDatabase().rawQuery(query, null);
-        }
+        } // doInBackground
 
         @Override
         protected void onPostExecute(Cursor cursor) {
@@ -63,7 +62,7 @@ public class ResultsActivity extends AppCompatActivity {
                     new String[]{CountryQuizDbHelper.COL_QUIZ_DATE, CountryQuizDbHelper.COL_QUIZ_SCORE},
                     new int[]{R.id.tvResultDate, R.id.tvResultScore},
                     0
-            ) {
+            ) { // SimpleCursorAdapter
                 @Override
                 public void setViewText(TextView v, String text) {
                     if (v.getId() == R.id.tvResultDate) {
@@ -78,11 +77,11 @@ public class ResultsActivity extends AppCompatActivity {
                         }
                     } else if (v.getId() == R.id.tvResultScore) {
                         text = text + "/6";
-                    }
+                    } // if
                     super.setViewText(v, text);
-                }
+                } // setViewText
             };
             lvPastResults.setAdapter(adapter);
-        }
-    }
-}
+        } // onPostExecute
+    } // LoadResultsTask
+} // ResultsActivity

@@ -14,29 +14,29 @@ public class Quiz implements Serializable {
         this.questions = questions;
         this.currentScore = 0;
         this.currentQuestionIndex = 0;
-    }
+    } // Quiz constructor
 
     public List<Question> getQuestions() {
         return questions;
-    }
+    } // getQuestions
 
     public int getCurrentScore() {
         return currentScore;
-    }
+    } // getCurrentScore
 
     public void incrementScore() {
         currentScore++;
-    }
+    } // incrementScore
 
     public int getCurrentQuestionIndex() {
         return currentQuestionIndex;
-    }
+    } // getCurrentQuestionIndex
 
     public void moveToNextQuestion() {
         currentQuestionIndex++;
-    }
+    } // moveToNextQuestion
 
     public boolean isFinished() {
         return currentQuestionIndex >= questions.size();
-    }
-}
+    } // isFinished
+} // Quiz

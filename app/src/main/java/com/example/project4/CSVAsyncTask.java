@@ -20,7 +20,7 @@ public class CSVAsyncTask extends AsyncTask<Void, Void, Boolean> {
     public CSVAsyncTask(Context context, CountryQuizDbHelper dbHelper) {
         this.context = context;
         this.dbHelper = dbHelper;
-    }
+    } // CSVAsyncTask
 
     @Override
     protected Boolean doInBackground(Void... voids) {
@@ -44,19 +44,19 @@ public class CSVAsyncTask extends AsyncTask<Void, Void, Boolean> {
                                 " (" + CountryQuizDbHelper.COL_COUNTRY_NAME + ", " +
                                 CountryQuizDbHelper.COL_COUNTRY_CONTINENT + ") VALUES (?, ?)";
                         db.execSQL(insertSQL, new Object[]{countryName, continent});
-                    }
-                }
+                    } // if
+                } // while
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
                 reader.close();
-            }
+            } // try
             return true;
         } catch (Exception e) {
             Log.e(TAG, "Error reading CSV file", e);
             return false;
-        }
-    }
+        } // try
+    } // doInBackground
 
     @Override
     protected void onPostExecute(Boolean result) {
@@ -64,6 +64,6 @@ public class CSVAsyncTask extends AsyncTask<Void, Void, Boolean> {
             Log.d(TAG, "Database populated successfully from CSV.");
         } else {
             Log.e(TAG, "Failed to populate database from CSV.");
-        }
-    }
-}
+        } // if
+    } // onPostExecute
+} // CSVAsyncTask

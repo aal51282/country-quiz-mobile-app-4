@@ -19,12 +19,22 @@ public class Question implements Serializable {
         answerChoices.add(correctAnswer);
         answerChoices.addAll(incorrectAnswers);
         Collections.shuffle(answerChoices);
-    }
+    }  // Question constructor
 
     // Getters and setters
-    public Country getCountry() { return country; }
-    public List<String> getAnswerChoices() { return answerChoices; }
-    public String getCorrectAnswer() { return correctAnswer; }
-    public String getUserAnswer() { return userAnswer; }
-    public void setUserAnswer(String answer) { this.userAnswer = answer; }
-}
+    public Country getCountry() {
+        return country;
+    } // getCountry
+    public List<String> getAnswerChoices() {
+        return answerChoices;
+    } // getAnswerChoices
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    } // getCorrectAnswer
+    public String getUserAnswer() {
+        return userAnswer;
+    } // getUserAnswer
+    public void setUserAnswer(String answer) {
+        this.userAnswer = answer;
+    } // setUserAnswer
+} // Question

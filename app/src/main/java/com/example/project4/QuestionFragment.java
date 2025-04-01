@@ -30,11 +30,11 @@ public class QuestionFragment extends Fragment {
 
     public interface OnAnswerSelectedListener {
         void onAnswerSelected(int questionPosition, String answer);
-    }
+    } // OnAnswerSelectedListener
 
     public QuestionFragment() {
         // Required empty public constructor
-    }
+    } // QuestionFragment constructor
 
     /**
      * Factory method to create a new instance of QuestionFragment
@@ -46,7 +46,7 @@ public class QuestionFragment extends Fragment {
         args.putInt(ARG_POSITION, position);
         fragment.setArguments(args);
         return fragment;
-    }
+    } // newInstance
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -55,8 +55,8 @@ public class QuestionFragment extends Fragment {
             callback = (OnAnswerSelectedListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnAnswerSelectedListener");
-        }
-    }
+        } // if
+    } // onAttach
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +68,7 @@ public class QuestionFragment extends Fragment {
         if (getArguments() != null) {
             question = (Question) getArguments().getSerializable(ARG_QUESTION);
             position = getArguments().getInt(ARG_POSITION);
-        }
+        } // if
 
         TextView tvQuestion = view.findViewById(R.id.tvQuestion);
         RadioGroup radioGroup = view.findViewById(R.id.radioGroupAnswers);
@@ -91,10 +91,10 @@ public class QuestionFragment extends Fragment {
             // If restoring a previous answer, check the appropriate button
             if (userAnswer != null && userAnswer.equals(answerText)) {
                 rb.setChecked(true);
-            }
+            } // if
 
             radioGroup.addView(rb);
-        }
+        } // for
 
         // Listener to notify when an answer is selected
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -105,11 +105,11 @@ public class QuestionFragment extends Fragment {
                     RadioButton selected = group.findViewById(checkedId);
                     if (selected != null && callback != null) {
                         callback.onAnswerSelected(position, selected.getText().toString());
-                    }
-                }
-            }
+                    } // if
+                } // if
+            } // onCheckedChanged
         });
 
         return view;
-    }
-}
+    } // onCreateView
+} // QuestionFragment
