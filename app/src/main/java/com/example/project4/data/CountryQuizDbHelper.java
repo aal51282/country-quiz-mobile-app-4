@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Helper class for managing the SQLite database for the country quiz app.
+ */
 public class CountryQuizDbHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "CountryQuizDbHelper";
@@ -28,6 +31,11 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
     // Singleton instance
     private static CountryQuizDbHelper instance;
 
+    /**
+     * Returns the singleton instance of the database helper.
+     * @param context The application context.
+     * @return The singleton instance of the database helper.
+     */
     public static synchronized CountryQuizDbHelper getInstance(Context context) {
         if (instance == null) {
             instance = new CountryQuizDbHelper(context.getApplicationContext());
@@ -35,10 +43,18 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
         return instance;
     } // getInstance
 
+    /**
+     * Private constructor to prevent direct instantiation.
+     * @param context The application context.
+     */
     private CountryQuizDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     } // CountryQuizDbHelper
 
+    /**
+     * Called when the database is created for the first time.
+     * @param db The database object.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create table for countries.
@@ -56,6 +72,12 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
         db.execSQL(createQuizzes);
     } // onCreate
 
+    /**
+     * Called when the database needs to be upgraded.
+     * @param db The database object.
+     * @param oldVersion The old database version.
+     * @param newVersion The new database version.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Handle schema changes if needed
@@ -65,8 +87,8 @@ public class CountryQuizDbHelper extends SQLiteOpenHelper {
     } // onUpgrade
 
     /**
-     * Checks whether the countries table has been populated.
-     * (For simplicity, this example assumes that if at least one record exists, the DB is populated.)
+     * Checks if the database is populated with countries.
+     * @return True if the database is populated, false otherwise.
      */
     public boolean isDatabasePopulated() {
         SQLiteDatabase db = getReadableDatabase();
