@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Button btnStartQuiz = findViewById(R.id.btnStartQuiz);
-        Button btnViewResults = findViewById(R.id.btnStartQuiz);
+        Button btnViewResults = findViewById(R.id.btnViewResults);
 
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
