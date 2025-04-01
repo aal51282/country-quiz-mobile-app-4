@@ -16,7 +16,7 @@
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the Country Quiz!" />
+        android:text="@string/welcome_text" />
 
     <TextView
         android:id="@+id/tvInstructions"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Test your knowledge of countries and continents! In this quiz, you'll be asked to identify the continents where various countries are located. Swipe left to move to the next question."
+        android:text="@string/instructions_text"
         android:textAlignment="center" />
 
     <Button
@@ -32,12 +32,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Start Quiz" />
+        android:text="@string/start_quiz" />
 
     <Button
         android:id="@+id/btnViewResults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="View Past Results" />
+        android:text="@string/view_results" />
 </LinearLayout>

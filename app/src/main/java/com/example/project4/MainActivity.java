@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,11 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
         // If this is the first launch, initialize the database from CSV asynchronously.
         if (!dbHelper.isDatabasePopulated()) {
+            Toast.makeText(this, "Initializing database from CSV file...", Toast.LENGTH_SHORT).show();
             new CSVAsyncTask(this, dbHelper).execute();
         }
 
         Button btnStartQuiz = findViewById(R.id.btnStartQuiz);
-        Button btnViewResults = findViewById(R.id.btnViewResults);
+        Button btnViewResults = findViewById(R.id.btnViewResults);  // Fixed ID
 
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
