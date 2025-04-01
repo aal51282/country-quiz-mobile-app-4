@@ -1,8 +1,11 @@
 package com.example.project4.data;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Quiz {
+public class Quiz implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private List<Question> questions;
     private int currentScore;
     private int currentQuestionIndex;
