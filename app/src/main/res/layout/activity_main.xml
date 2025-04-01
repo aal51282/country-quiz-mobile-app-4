@@ -27,6 +27,16 @@
         android:text="@string/instructions_text"
         android:textAlignment="center" />
 
+    <ImageView
+        android:id="@+id/ivContinentsMap"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/continents_map_description"
+        android:scaleType="fitCenter"
+        android:src="@drawable/continents_map" />
+
     <Button
         android:id="@+id/btnStartQuiz"
         android:layout_width="wrap_content"

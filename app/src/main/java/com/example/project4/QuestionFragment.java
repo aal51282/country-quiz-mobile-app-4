@@ -74,7 +74,7 @@ public class QuestionFragment extends Fragment {
         RadioGroup radioGroup = view.findViewById(R.id.radioGroupAnswers);
 
         // Set question text
-        String questionText = "On which continent is " + question.getCountry().getName() + " located?";
+        String questionText = getString(R.string.continent_question, question.getCountry().getName());
         tvQuestion.setText(questionText);
 
         // Check if this question already has an answer (when restoring state)

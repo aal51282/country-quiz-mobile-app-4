@@ -33,9 +33,9 @@ public class ResultsActivity extends AppCompatActivity {
         // Show current quiz score if passed from QuizActivity
         int score = getIntent().getIntExtra("score", -1);
         if (score != -1) {
-            tvScore.setText("Your score: " + score + "/" + 6);
+            tvScore.setText(getString(R.string.quiz_score, score, 6));
         } else {
-            tvScore.setText("Past Quiz Results");
+            tvScore.setText(R.string.past_results);
         }
 
         // Load past quiz results asynchronously

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Initializing database from CSV file...", Toast.LENGTH_SHORT).show();
             new CSVAsyncTask(this, dbHelper).execute();
         }
+
+        // Set up the continents map image
+        ImageView ivContinentsMap = findViewById(R.id.ivContinentsMap);
+        ivContinentsMap.setImageResource(R.drawable.continents_map);
 
         Button btnStartQuiz = findViewById(R.id.btnStartQuiz);
         Button btnViewResults = findViewById(R.id.btnViewResults);  // Fixed ID

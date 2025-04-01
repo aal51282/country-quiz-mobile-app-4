@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Country Quiz</string>
     <string name="welcome_text">Welcome to the Country Quiz!</string>
-    <string name="instructions_text">Test your knowledge of countries and continents! In this quiz, you\'ll be asked to identify the continents where various countries are located. Swipe left to move to the next question.</string>
+    <string name="instructions_text">Test your knowledge of countries and continents! In this quiz, you\'ll be asked to identify the continents where various countries are located. </string>
     <string name="start_quiz">Start Quiz</string>
     <string name="view_results">View Past Results</string>
     <string name="quiz_score">Your score: %1$d/%2$d</string>
     <string name="continent_question">On which continent is %1$s located?</string>
     <string name="past_results">Past Quiz Results</string>
+    <string name="continents_map_description">World map showing all continents with different colors</string>
 </resources>
