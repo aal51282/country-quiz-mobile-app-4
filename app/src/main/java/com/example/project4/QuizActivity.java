@@ -1,6 +1,8 @@
 package com.example.project4;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,9 +63,29 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
     }
 
     private List<Country> loadCountriesFromDatabase() {
-        // Implement your DB query to load all countries.
-        // This is just a placeholder implementation.
-        return new ArrayList<>();
+        List<Country> countries = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Query to retrieve all countries
+        String query = "SELECT " +
+                CountryQuizDbHelper.COL_COUNTRY_ID + ", " +
+                CountryQuizDbHelper.COL_COUNTRY_NAME + ", " +
+                CountryQuizDbHelper.COL_COUNTRY_CONTINENT +
+                " FROM " + CountryQuizDbHelper.TABLE_COUNTRIES;
+
+        try (Cursor cursor = db.rawQuery(query, null)) {
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(CountryQuizDbHelper.COL_COUNTRY_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(CountryQuizDbHelper.COL_COUNTRY_NAME));
+                String continent = cursor.getString(cursor.getColumnIndexOrThrow(CountryQuizDbHelper.COL_COUNTRY_CONTINENT));
+
+                countries.add(new Country(id, name, continent));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error loading countries from database", e);
+        }
+
+        return countries;
     }
 
     private void createNewQuiz() {
