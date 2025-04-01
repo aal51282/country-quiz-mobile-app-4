@@ -17,7 +17,7 @@ import com.example.project4.data.Question;
 import java.util.List;
 
 /**
- * A Fragment that displays a single quiz question with multiple choice answers
+ * A fragment representing a single question in the quiz.
  */
 public class QuestionFragment extends Fragment {
 
@@ -37,8 +37,11 @@ public class QuestionFragment extends Fragment {
     } // QuestionFragment constructor
 
     /**
-     * Factory method to create a new instance of QuestionFragment
-     */
+     * Creates a new instance of the fragment with the given question and position.
+     * @param question The question to display.
+     * @param position The position of the question in the quiz.
+     * @return A new instance of the fragment.
+     * */
     public static QuestionFragment newInstance(Question question, int position) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
@@ -48,6 +51,10 @@ public class QuestionFragment extends Fragment {
         return fragment;
     } // newInstance
 
+    /**
+     * Called when the fragment is attached to the activity.
+     * @param context The context of the activity.
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -58,6 +65,18 @@ public class QuestionFragment extends Fragment {
         } // if
     } // onAttach
 
+    /**
+     * Called when the fragment is detached from the activity.
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

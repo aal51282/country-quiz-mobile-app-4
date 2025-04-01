@@ -12,12 +12,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project4.data.CountryQuizDbHelper;
 
-
+/**
+ * The main activity of the application.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private CountryQuizDbHelper dbHelper;
 
+    /**
+     * Called when the activity is created.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnStartQuiz = findViewById(R.id.btnStartQuiz);
         Button btnViewResults = findViewById(R.id.btnViewResults);  // Fixed ID
 
+        // Set up the start quiz button
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             } // onClick
         });
 
+        // Set up the view results button
         btnViewResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

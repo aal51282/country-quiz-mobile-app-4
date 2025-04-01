@@ -15,12 +15,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The activity that displays the quiz results.
+ */
 public class ResultsActivity extends AppCompatActivity {
 
     private CountryQuizDbHelper dbHelper;
     private TextView tvScore;
     private ListView lvPastResults;
 
+    /**
+     * Called when the activity is created.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,9 @@ public class ResultsActivity extends AppCompatActivity {
         new LoadResultsTask().execute();
     } // onCreate
 
+    /**
+     * Asynchronous task to load quiz results from the database.
+     */
     private class LoadResultsTask extends AsyncTask<Void, Void, Cursor> {
         @Override
         protected Cursor doInBackground(Void... voids) {
@@ -52,6 +62,11 @@ public class ResultsActivity extends AppCompatActivity {
             return dbHelper.getReadableDatabase().rawQuery(query, null);
         } // doInBackground
 
+        /**
+         * Called after the task is completed.
+         * @param cursor The result of the operation computed by {@link #doInBackground}.
+         *
+         */
         @Override
         protected void onPostExecute(Cursor cursor) {
             // Create a custom SimpleCursorAdapter with a date formatter
@@ -63,6 +78,12 @@ public class ResultsActivity extends AppCompatActivity {
                     new int[]{R.id.tvResultDate, R.id.tvResultScore},
                     0
             ) { // SimpleCursorAdapter
+
+                /**
+                 * Sets the text for a TextView.
+                 * @param v TextView to receive text
+                 * @param text the text to be set for the TextView
+                 */
                 @Override
                 public void setViewText(TextView v, String text) {
                     if (v.getId() == R.id.tvResultDate) {

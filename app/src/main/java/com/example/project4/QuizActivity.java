@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * The activity that displays the quiz.
+ */
 public class QuizActivity extends AppCompatActivity implements QuestionFragment.OnAnswerSelectedListener {
 
     private static final String TAG = "QuizActivity";
@@ -37,6 +40,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
     private CountryQuizDbHelper dbHelper;
     private TextView tvProgress;
 
+    /**
+     * Called when the activity is created.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +77,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
             private boolean isScrolling = false;
             private int currentPosition = 0;
 
+            /**
+             * Called when the scroll state changes.
+             * @param state The new scroll state.
+             */
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
@@ -86,6 +97,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                 } // if
             } // onPageScrollStateChanged
 
+            /**
+             * Called when the selected page has been changed.
+             * @param position Position index of the new selected page.
+             */
             @Override
             public void onPageSelected(int position) {
                 // Update progress text when page changes
@@ -94,6 +109,9 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         });
     } // onCreate
 
+    /**
+     * Asynchronous task to load countries from the database.
+     */
     private class LoadCountriesTask extends AsyncTask<Void, Void, List<Country>> {
         private boolean isRestoring;
         private int positionToRestore;
@@ -103,11 +121,22 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
             this.positionToRestore = positionToRestore;
         } // LoadCountriesTask
 
+        /**
+         * Loads countries from the database.
+         * @param voids The parameters of the task.
+         *
+         * @return The list of countries.
+         */
         @Override
         protected List<Country> doInBackground(Void... voids) {
             return loadCountriesFromDatabase();
         } // doInBackground
 
+        /**
+         * Called after the task is completed.
+         * @param countries The result of the operation as a List of Country objects.
+         *
+         */
         @Override
         protected void onPostExecute(List<Country> countries) {
             allCountries = countries;
@@ -126,6 +155,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         } // onPostExecute
     } // LoadCountriesTask
 
+    /**
+     * Loads countries from the database.
+     * @return The list of countries.
+     */
     private List<Country> loadCountriesFromDatabase() {
         List<Country> countries = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -152,6 +185,9 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         return countries;
     } // loadCountriesFromDatabase
 
+    /**
+     * Creates a new quiz with a set of random countries.
+     */
     private void createNewQuiz() {
         // Randomly select NUM_QUESTIONS countries without duplicates
         Set<Integer> indices = new HashSet<>();
@@ -195,6 +231,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         setupQuizUI(0); // Start at the first question
     } // createNewQuiz
 
+    /**
+     * Sets up the UI for the quiz.
+     * @param startPosition The starting position of the quiz.
+     */
     private void setupQuizUI(int startPosition) {
         // Initialize the ViewPager2 with the question fragments
         pagerAdapter = new QuizPagerAdapter(this, quiz);
@@ -206,7 +246,9 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
     } // setupQuizUI
 
     /**
-     * This callback is invoked when a user selects an answer in a QuestionFragment
+     * Called when an answer is selected.
+     * @param questionPosition The position of the question in the quiz.
+     * @param answer The selected answer.
      */
     @Override
     public void onAnswerSelected(int questionPosition, String answer) {
@@ -226,6 +268,9 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         } // if
     } // onAnswerSelected
 
+    /**
+     * Asynchronous task to store the quiz result in the database.
+     */
     private class StoreQuizResultTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
@@ -233,6 +278,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
             return null;
         } // doInBackground
 
+        /**
+         * Called after the task is completed.
+         * @param aVoid The result of the task.
+         */
         @Override
         protected void onPostExecute(Void aVoid) {
             // Once stored, show the result
@@ -243,6 +292,9 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         } // onPostExecute
     } // StoreQuizResultTask
 
+    /**
+     * Stores the quiz result in the database.
+     */
     private void storeQuizResult() {
         // Insert the quiz date and score into the quizzes table
         String date = String.valueOf(System.currentTimeMillis());
@@ -253,6 +305,11 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                 new Object[]{date, quiz.getCurrentScore()});
     } // storeQuizResult
 
+    /**
+     * Called when the activity is destroyed.
+     * @param outState Bundle in which to place your saved state.
+     *
+     */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
