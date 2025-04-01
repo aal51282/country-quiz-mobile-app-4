@@ -9,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.project4.data.Question;
@@ -16,9 +17,7 @@ import com.example.project4.data.Question;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link QuestionFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A Fragment that displays a single quiz question with multiple choice answers
  */
 public class QuestionFragment extends Fragment {
 
@@ -34,9 +33,12 @@ public class QuestionFragment extends Fragment {
     }
 
     public QuestionFragment() {
-        // Required empty public constructor.
+        // Required empty public constructor
     }
 
+    /**
+     * Factory method to create a new instance of QuestionFragment
+     */
     public static QuestionFragment newInstance(Question question, int position) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
@@ -47,7 +49,7 @@ public class QuestionFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnAnswerSelectedListener) {
             callback = (OnAnswerSelectedListener) context;
@@ -60,7 +62,7 @@ public class QuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment.
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_question, container, false);
 
         if (getArguments() != null) {
@@ -71,26 +73,39 @@ public class QuestionFragment extends Fragment {
         TextView tvQuestion = view.findViewById(R.id.tvQuestion);
         RadioGroup radioGroup = view.findViewById(R.id.radioGroupAnswers);
 
-        // Set question text.
+        // Set question text
         String questionText = "On which continent is " + question.getCountry().getName() + " located?";
         tvQuestion.setText(questionText);
 
-        // Add radio buttons for each answer.
+        // Check if this question already has an answer (when restoring state)
+        String userAnswer = question.getUserAnswer();
+
+        // Add radio buttons for each answer
         List<String> answers = question.getAnswerChoices();
         for (int i = 0; i < answers.size(); i++) {
+            String answerText = answers.get(i);
             RadioButton rb = new RadioButton(getContext());
             rb.setId(View.generateViewId());
-            rb.setText(answers.get(i));
+            rb.setText(answerText);
+
+            // If restoring a previous answer, check the appropriate button
+            if (userAnswer != null && userAnswer.equals(answerText)) {
+                rb.setChecked(true);
+            }
+
             radioGroup.addView(rb);
         }
 
-        // Listener to notify when an answer is selected.
+        // Listener to notify when an answer is selected
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton selected = group.findViewById(checkedId);
-                if (selected != null && callback != null) {
-                    callback.onAnswerSelected(position, selected.getText().toString());
+                // Only proceed if this is a new selection (not just restoring state)
+                if (checkedId != -1) {
+                    RadioButton selected = group.findViewById(checkedId);
+                    if (selected != null && callback != null) {
+                        callback.onAnswerSelected(position, selected.getText().toString());
+                    }
                 }
             }
         });
