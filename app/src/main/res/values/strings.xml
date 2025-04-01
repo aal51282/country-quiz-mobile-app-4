@@ -8,4 +8,6 @@
     <string name="continent_question">On which continent is %1$s located?</string>
     <string name="past_results">Past Quiz Results</string>
     <string name="continents_map_description">World map showing all continents with different colors</string>
+    <string name="progress_text">Question %1$d/%2$d</string>
+    <string name="swipe_instruction">Swipe left after answering</string>
 </resources>

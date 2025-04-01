@@ -5,18 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".QuestionFragment" >
+    tools:context=".QuestionFragment">
 
     <TextView
         android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:text="On which continent is Country located?"
         android:textSize="18sp"
-        android:text="Question goes here" />
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/radioGroupAnswers"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>

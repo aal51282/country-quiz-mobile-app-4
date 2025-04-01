@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
     private QuizPagerAdapter pagerAdapter;
     private List<Country> allCountries; // Loaded from the database
     private CountryQuizDbHelper dbHelper;
+    private TextView tvProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,19 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
 
         dbHelper = CountryQuizDbHelper.getInstance(this);
         viewPager = findViewById(R.id.quizViewPager);
+        tvProgress = findViewById(R.id.tvProgress);
+
+        // Set initial progress text
+        tvProgress.setText(getString(R.string.progress_text, 1, NUM_QUESTIONS));
 
         // If we have a saved instance, restore the quiz
         if (savedInstanceState != null && savedInstanceState.containsKey(KEY_QUIZ_STATE)) {
             // Restore quiz from saved instance
             quiz = (Quiz) savedInstanceState.getSerializable(KEY_QUIZ_STATE);
             int currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, 0);
+
+            // Update progress text for restored position
+            tvProgress.setText(getString(R.string.progress_text, currentPosition + 1, NUM_QUESTIONS));
 
             // Load countries and then set up the restored quiz
             new LoadCountriesTask(true, currentPosition).execute();
@@ -76,6 +85,12 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                         viewPager.setCurrentItem(currentPosition, true);
                     }
                 }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                // Update progress text when page changes
+                tvProgress.setText(getString(R.string.progress_text, position + 1, NUM_QUESTIONS));
             }
         });
     }
