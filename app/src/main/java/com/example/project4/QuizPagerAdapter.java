@@ -34,7 +34,12 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         // Create a new instance of QuestionFragment with the question data
-        return QuestionFragment.newInstance(quiz.getQuestions().get(position), position);
+        if (position < quiz.getQuestions().size()) {
+            return QuestionFragment.newInstance(quiz.getQuestions().get(position), position);
+        } else {
+            // Blank fragment as submission trigger
+            return new Fragment();
+        }
     } // createFragment
 
     /**

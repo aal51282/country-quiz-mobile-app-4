@@ -90,10 +90,19 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                     isScrolling = false;
                 } else if (state == ViewPager2.SCROLL_STATE_IDLE && isScrolling) {
                     isScrolling = false;
+
+                    int newPosition = viewPager.getCurrentItem();
+
+                    // Allow forward swipe from the last question to subit the quiz
+                    if (currentPosition == NUM_QUESTIONS - 1 && newPosition == currentPosition) {
+                        new StoreQuizResultTask().execute();
+                    }
                     // If trying to swipe to a previous question, revert back
-                    if (viewPager.getCurrentItem() < currentPosition) {
+                    else if (newPosition < currentPosition) {
                         viewPager.setCurrentItem(currentPosition, true);
-                    } // if
+                    } // else-if
+
+                    currentPosition  = newPosition;
                 } // if
             } // onPageScrollStateChanged
 
@@ -258,14 +267,6 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
             quiz.incrementScore();
         }
         quiz.moveToNextQuestion();
-
-        // If there are more questions, move to the next fragment
-        if (!quiz.isFinished()) {
-            viewPager.setCurrentItem(questionPosition + 1, true);
-        } else {
-            // Quiz finished – store the quiz result asynchronously in the DB
-            new StoreQuizResultTask().execute();
-        } // if
     } // onAnswerSelected
 
     /**
