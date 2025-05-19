@@ -1,4 +1,4 @@
-# Country Quiz Mobile App
+# Country Quiz Mobile Application
 
 ## Overview
 
